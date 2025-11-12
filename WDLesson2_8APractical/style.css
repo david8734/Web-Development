@@ -9,6 +9,9 @@ a{
 }
 
 /* Challenge 7: Create a class rule, container that set the display property to flex */
+.container {
+  display: flex;
+}
 
 /* Challenge 8: Create a class rule, column that set the flex-direction property to column */
 
