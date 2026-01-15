@@ -32,6 +32,21 @@
       <!-- Challenge 3: Add an event listener to each of the images above in order to display an appropriate message about the image 
            using an alert when user clicks on the image.  
        -->
+           <script>
+        document.getElementById("image1").addEventListener("click", function () {
+            alert("This is a dice image.");
+        });
+
+        document.getElementById("image2").addEventListener("click", function () {
+            alert("This image represents creativity.");
+        });
+
+        document.getElementById("image3").addEventListener("click", function () {
+            alert("This is a photography image.");
+        });
+    </script>
+
+    <hr>
 
        <!-- Challenges 4 - 7 are in style.css-->
     </div>
@@ -39,6 +54,13 @@
     <div class="translations">
       <!-- Challenge 8: Choice three words in another langauge. Place each word in a <span>.  Give each <span> a class of button
            When the user clicks on the word in the <span> offer the English translation in an alert.   -->
+            <div class="translations">
+        <span class="button" id="word1">Hola</span>
+        <span class="button" id="word2">Merci</span>
+        <span class="button" id="word3">Ciao</span>
+    </div>
+
+    <script src="script.js"></script>
       
 
     </div>
