@@ -10,9 +10,28 @@
         6) After the for loop complete building the table and display it
 */
 
-function balance(){
+function balance() {
+    let principal = parseFloat(document.getElementById("principal").value);
+    let rate = parseFloat(document.getElementById("rate").value) / 100;
+    let years = parseInt(document.getElementById("years").value);
+    let n = parseInt(document.getElementById("n").value);
 
+    let table = "<table border='1'>";
+    table += "<tr><th>Year</th><th>Balance</th></tr>";
 
+    let currentBalance = principal;
+
+    for (let i = 1; i <= years; i++) {
+        currentBalance = currentBalance * Math.pow((1 + rate / n), n);
+        table += "<tr>";
+        table += "<td>" + i + "</td>";
+        table += "<td>$" + currentBalance.toFixed(2) + "</td>";
+        table += "</tr>";
+    }
+
+    table += "</table>";
+
+    document.getElementById("output").innerHTML = table;
 }
 
 /* Challenge Bonus: Allow the user to enter n.  This will require you to modify,
