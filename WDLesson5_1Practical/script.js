@@ -12,3 +12,18 @@ Year 3: $xxxxxx
 ...
 Year N: $xxxxxx
 */
+
+function calculate() {
+  const principal = parseFloat(document.getElementById("principal").value);
+  const rate = parseFloat(document.getElementById("rate").value) / 100;
+  const years = parseInt(document.getElementById("years").value);
+
+  let output = "";
+
+  for (let t = 1; t <= years; t++) {
+    let amount = principal * Math.pow(1 + rate, t);
+    output += "Year " + t + ": $" + amount.toFixed(2) + "<br>";
+  }
+
+  document.getElementById("output").innerHTML = output;
+}
