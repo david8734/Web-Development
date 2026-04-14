@@ -1,31 +1,22 @@
-/* Challenge: Complete the Compound Interest Calculator
-        1) Retrieve and store all the information in appropriate values. 
-           Note: Typically user enter rates as percentages.  Divide the value retrieved by 100.
-                 Remember principals and rates have decimals.
-        2) Create a build variable to start the table
-        3) Establish the for loop to iterate over the number of months in the investment
-        4) Calculate the balance using compound interest for each year. Hint: Loop variable
-        5) Build each row for the balance after each year
-           Note: When interpolating the balance, use a.toFixed(2) to adjust the amounts to two decimal places.  
-        6) After the for loop complete building the table and display it
-*/
 
-function balance() {
+
+        function balance() {
     let principal = parseFloat(document.getElementById("principal").value);
     let rate = parseFloat(document.getElementById("rate").value) / 100;
     let years = parseInt(document.getElementById("years").value);
     let n = parseInt(document.getElementById("n").value);
 
-    let table = "<table border='1'>";
+    let table = "<table>";
     table += "<tr><th>Year</th><th>Balance</th></tr>";
 
     let currentBalance = principal;
 
     for (let i = 1; i <= years; i++) {
-        currentBalance = currentBalance * Math.pow((1 + rate / n), n);
+        currentBalance = currentBalance * Math.pow(1 + rate / n, n);
+
         table += "<tr>";
         table += "<td>" + i + "</td>";
-        table += "<td>$" + currentBalance.toFixed(2) + "</td>";
+        table += "<td>" + currentBalance.toFixed(2) + "</td>";
         table += "</tr>";
     }
 
@@ -33,6 +24,43 @@ function balance() {
 
     document.getElementById("output").innerHTML = table;
 }
+
+
+
+function calculateBMI() {
+    let height = parseFloat(document.getElementById("height").value);
+    let weight = parseFloat(document.getElementById("weight").value);
+
+    let bmi = weight / (height * height);
+
+    let category = "";
+    let image = "";
+
+    if (bmi < 18.5) {
+        category = "Underweight";
+        image = "underweight.png";
+    } 
+    else if (bmi < 25) {
+        category = "Healthy Weight";
+        image = "healthyweight.png";
+    } 
+    else if (bmi < 30) {
+        category = "Overweight";
+        image = "overweight.png";
+    } 
+    else {
+        category = "Obesity";
+        image = "obeseweight.png";
+    }
+
+    let result = "<p>BMI: " + bmi.toFixed(2) + "</p>";
+    result += "<p>Category: " + category + "</p>";
+    result += "<img src='" + image + "' width='150'>";
+
+    document.getElementById("bmiOutput").innerHTML = result;
+}
+
+
 
 /* Challenge Bonus: Allow the user to enter n.  This will require you to modify,
         1) Retrieve the value of n from the user.

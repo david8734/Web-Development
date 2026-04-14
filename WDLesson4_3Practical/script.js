@@ -3,27 +3,68 @@
        2) Display BMI status as per the chart in index.html
        3) Display the corresponding image based on the BMI status.
 */
-function bmi(){
-       let w = parseFloat(document.getElementById("w").value);
-       let h = parseFloat(document.getElementById("h"))
-       let output = document.getElementById("output");
+ balance() 
+     principal = parseFloat(document.getElementById("principal").value);
+     rate = parseFloat(document.getElementById("rate").value) / 100;
+     years = parseInt(document.getElementById("years").value);
+     n = parseInt(document.getElementById("n").value);
 
-       let msg = "";
-       let src = "";
+     table = "<table>";
+    table += "<tr><th>Year</th><th>Balance</th></tr>";
 
-       let bmi = 703 * ( w / h ** 2);
-       if(bmi <  18.5){
-              msg = "Underweight";
-       } else if( bmi >= 18.4 &&  bmi <= 24.9 ){
-              msg = "Heavy Weight";
-              filename = "healthyweight.png";     
-       }
+     currentBalance = principal;
+
+    for ( i = 1; i <= years; i++) {
+        currentBalance = currentBalance * Math.pow(1 + rate / n, n);
+
+        table += "<tr>";
+        table += "<td>" + i + "</td>";
+        table += "<td>" + currentBalance.toFixed(2) + "</td>";
+        table += "</tr>";
+    }
+
+    table += "</table>";
+
+    document.getElementById("output").innerHTML = table;
 
 
-       output.innerHTML = `Your BMI  is ${bmi}. <img src=${filename}>`
 
 
-}
+ calculateBMI() 
+     height = parseFloat(document.getElementById("height").value);
+     weight = parseFloat(document.getElementById("weight").value);
+
+     bmi = weight / (height * height);
+
+     category = "";
+     image = "";
+
+    if (bmi < 18.5) {
+        category = "Underweight";
+        image = "underweight.png";
+    } 
+    else if (bmi < 25) {
+        category = "Healthy Weight";
+        image = "healthyweight.png";
+    } 
+    else if (bmi < 30) {
+        category = "Overweight";
+        image = "overweight.png";
+    } 
+    else {
+        category = "Obesity";
+        image = "obeseweight.png";
+    }
+
+     result = "<p>BMI: " + bmi.toFixed(2) + "</p>";
+    result += "<p>Category: " + category + "</p>";
+    result += "<img src='" + image + "' width='150'>";
+
+    document.getElementById("bmiOutput").innerHTML = result;
+
+
+
+
 /* 
 Guideline:
 1) Create the function

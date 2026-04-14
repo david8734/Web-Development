@@ -14,10 +14,27 @@
         let message = ""
 
         // Challenge 5: If the guess is lower than secret, set message to "Guess higher" 
+        const secretNumber = 7;
+const userGuess = 5; // replace with actual user input
+if (userGuess > secretNumber) {
+    console.log("Guess lower");
+} else if (userGuess < secretNumber) {
+    console.log("Guess higher");
+} else {
+    console.log("You got it!");
+}
 
         // Challenge 6: If the guess is higher than secret, set message to "Guess lower" 
+        if (userGuess > secretNumber) {
+    console.log("Guess lower");
+} else if (userGuess < secretNumber) {
+    console.log("Guess higher");
+}
 
         // Challenge 7: If the guess is equal to secret, set message to "You got it!" 
+        if (userGuess === secretNumber) {
+    console.log("You got it!");
+}
 
         output.innerHTML = `<h3>${message}</h3>`
         //Note:  Remember innerHTML accepts any type of HTML for example an image
