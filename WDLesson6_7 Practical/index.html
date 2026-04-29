@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NYC Motor Vehicle Collisions</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>NYC Motor Vehicle Collisions</h1>
+
+<!-- Filters -->
+<div>
+  <label>Borough:</label>
+  <select id="boroughFilter">
+    <option value="">All</option>
+    <option value="BROOKLYN">Brooklyn</option>
+    <option value="MANHATTAN">Manhattan</option>
+    <option value="QUEENS">Queens</option>
+    <option value="BRONX">Bronx</option>
+    <option value="STATEN ISLAND">Staten Island</option>
+  </select>
+
+  <label>Min Injured:</label>
+  <input type="number" id="injuryFilter" placeholder="0">
+
+  <button onclick="applyFilter()">Filter</button>
+</div>
+
+<!-- Cards -->
+<div id="cardsContainer"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
