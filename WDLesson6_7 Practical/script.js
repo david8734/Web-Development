@@ -58,7 +58,7 @@ function showAll(){
 function filterByBorough(){
 
   let input = document.getElementById("borough").value.toLowerCase();
-  let vehicleInput = document.getElementById("vehicle").value.toLowerCase(); // ✅ ADDED
+  let vehicleInput = document.getElementById("vehicle").value.toLowerCase(); // 
 
   let output = document.getElementById("output");
   let result = document.getElementById("result");
@@ -71,9 +71,9 @@ function filterByBorough(){
     let c = data[i];
 
     let borough = (c.borough || "").toLowerCase();
-    let vehicle = (c.vehicle_type_code1 || "").toLowerCase(); // ✅ ADDED
+    let vehicle = (c.vehicle_type_code1 || "").toLowerCase(); // 
 
-    if(borough.includes(input) && vehicle.includes(vehicleInput)){ // ✅ MODIFIED
+    if(borough.includes(input) && vehicle.includes(vehicleInput)){ // 
 
       build += `
         <div class="card">
