@@ -1,34 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>NYC Motor Vehicle Collisions</title>
+  <meta charset="UTF-8">
+  <title>NYC Collision Data</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>NYC Motor Vehicle Collisions</h1>
+  <header>
+    <h1>NYC Motor Vehicle Collision Dataset</h1>
+    <p>View and filter NYC collision data</p>
+  </header>
 
-<!-- Filters -->
-<div>
-  <label>Borough:</label>
-  <select id="boroughFilter">
-    <option value="">All</option>
-    <option value="BROOKLYN">Brooklyn</option>
-    <option value="MANHATTAN">Manhattan</option>
-    <option value="QUEENS">Queens</option>
-    <option value="BRONX">Bronx</option>
-    <option value="STATEN ISLAND">Staten Island</option>
-  </select>
+  <section id="filters">
 
-  <label>Min Injured:</label>
-  <input type="number" id="injuryFilter" placeholder="0">
+    <div class="filter-box">
+      <label>Filter by Borough:</label>
+      <input type="text" id="borough" placeholder="e.g. Brooklyn">
+      <button onclick="filterByBorough()">Search</button>
+    </div>
 
-  <button onclick="applyFilter()">Filter</button>
+    <div class="filter-box">
+  <label>Filter by Vehicle Type:</label>
+  <input type="text" id="vehicle" placeholder="e.g. Sedan">
 </div>
 
-<!-- Cards -->
-<div id="cardsContainer"></div>
+    <div id="result"></div>
 
-<script src="script.js"></script>
+  </section>
+
+  <section>
+    <h2>Results</h2>
+    <div id="output"></div>
+  </section>
+
+  <script src="script.js"></script>
+
 </body>
 </html>

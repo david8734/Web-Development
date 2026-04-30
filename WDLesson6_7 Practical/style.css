@@ -1,26 +1,74 @@
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f0f2f5;
+  background-color: #f2f2f2;
 }
 
-#cardsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+
+header {
+  background-color: #1e66ff;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
+
+
+#filters {
+  text-align: center;
+  margin: 20px;
+}
+
+.filter-box input {
+  padding: 8px;
+  width: 200px;
+}
+
+.filter-box button {
+  padding: 8px 12px;
+  background-color: #1e66ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-box button:hover {
+  background-color: #004bd6;
+}
+
+
+#result {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+#output {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+}
+
 
 .card {
-  background: rgb(103, 117, 238);
-  padding: 15px;
+  background: white;
+  margin: 10px;
+  padding: 10px;
+  width: 220px;
   border-radius: 10px;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-.card strong {
-  display: inline-block;
-  margin-top: 5px;
+
+.fitted {
+  max-width: 220px;
+}
+
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #1e66ff;
+  color: white;
+  margin-top: 20px;
 }

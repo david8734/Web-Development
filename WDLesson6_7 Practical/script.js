@@ -1,74 +1,102 @@
-let allData = [];
+let data = [];
 
-// Load data on page load
-window.onload = () => {
-  fetchData();
-};
 
-async function fetchData() {
-  try {
-    const response = await fetch(
-      'https://data.cityofnewyork.us/resource/h9gi-nx95.json?$limit=1000&$order=crash_date DESC'
-    );
+async function init(){
 
-    const data = await response.json();
-    allData = data;
-    displayData(allData);
+  let response = await fetch("311.json");
+  let json = await response.json();
 
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-// Display cards
-function displayData(data) {
-  const container = document.getElementById("cardsContainer");
-  container.innerHTML = "";
-
-  if (data.length === 0) {
-    container.innerHTML = "<p>No data found</p>";
-    return;
+  
+  if(Array.isArray(json)){
+    data = json;
+  } else if(json.data){
+    data = json.data;
+  } else {
+    data = [];
   }
 
-  data.forEach(item => {
-    const crashDate = item.crash_date || "N/A";
-    const borough = item.borough || "N/A";
-    const zip = item.zip_code || "N/A";
-    const injured = item.number_of_persons_injured || 0;
-    const killed = item.number_of_persons_killed || 0;
-    const cause = item.contributing_factor_vehicle_1 || "Unknown";
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-  <h3>Collision Report</h3>
-  <p><strong>Date:</strong> ${crashDate}</p>
-  <p><strong>Borough:</strong> ${borough}</p>
-  <p><strong>Zip:</strong> ${zip}</p>
-  <p><strong>Injured:</strong> ${injured}</p>
-  <p><strong>Killed:</strong> ${killed}</p>
-  <p><strong>Cause:</strong> ${cause}</p>
-`;
-
-    container.appendChild(card);
-  });
+  showAll();
 }
 
-// Apply filters
-function applyFilter() {
-  const selectedBorough = document.getElementById("boroughFilter").value;
-  const minInjured = document.getElementById("injuryFilter").value;
+init();
 
-  const filtered = allData.filter(item => {
-    const borough = item.borough || "";
-    const injured = parseInt(item.number_of_persons_injured) || 0;
 
-    return (
-      (selectedBorough === "" || borough === selectedBorough) &&
-      (minInjured === "" || injured >= parseInt(minInjured))
-    );
-  });
 
-  displayData(filtered);
+function showAll(){
+
+  let output = document.getElementById("output");
+  let build = "";
+
+  for(let i = 0; i < data.length; i++){
+
+    let c = data[i];
+
+    build += `
+      <div class="card">
+
+        <h3>${c.contributing_factor_vehicle_1 || "N/A"}</h3>
+
+        <p><b>Borough:</b> ${c.borough || "N/A"}</p>
+
+        <p><b>Date:</b> ${c.crash_date || "N/A"}</p>
+
+        <p><b>Zip:</b> ${c.zip_code || c.incident_zip || "N/A"}</p>
+
+        <p><b>Injured:</b> ${c.number_of_persons_injured || 0}</p>
+
+        <p><b>Killed:</b> ${c.number_of_persons_killed || 0}</p>
+
+      </div>
+    `;
+  }
+
+  output.innerHTML = build;
+}
+
+
+
+function filterByBorough(){
+
+  let input = document.getElementById("borough").value.toLowerCase();
+  let vehicleInput = document.getElementById("vehicle").value.toLowerCase(); // ✅ ADDED
+
+  let output = document.getElementById("output");
+  let result = document.getElementById("result");
+
+  let build = "";
+  let count = 0;
+
+  for(let i = 0; i < data.length; i++){
+
+    let c = data[i];
+
+    let borough = (c.borough || "").toLowerCase();
+    let vehicle = (c.vehicle_type_code1 || "").toLowerCase(); // ✅ ADDED
+
+    if(borough.includes(input) && vehicle.includes(vehicleInput)){ // ✅ MODIFIED
+
+      build += `
+        <div class="card">
+
+          <h3>${c.contributing_factor_vehicle_1 || "N/A"}</h3>
+
+          <p><b>Borough:</b> ${c.borough || "N/A"}</p>
+
+          <p><b>Date:</b> ${c.crash_date || "N/A"}</p>
+
+          <p><b>Zip:</b> ${c.zip_code || c.incident_zip || "N/A"}</p>
+
+          <p><b>Injured:</b> ${c.number_of_persons_injured || 0}</p>
+
+          <p><b>Killed:</b> ${c.number_of_persons_killed || 0}</p>
+
+        </div>
+      `;
+
+      count++;
+    }
+  }
+
+  result.innerHTML = count + " results found";
+  output.innerHTML = build;
 }
