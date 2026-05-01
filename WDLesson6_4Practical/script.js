@@ -1,37 +1,45 @@
-async function init(){
-  // Challenge 1: Retrieve the FBI data from https://raw.githubusercontent.com/rcastro2/WebDevelopment/refs/heads/main/data/fbi.json
-  let link = "https://raw.githubusercontent.com/rcastro2/WebDevelopment/refs/heads/main/data/fbi.json"
-  info = await fetch(link);
-  data = await info.json();
-  
-  let output = document.getElementById("output");
-  let build = "";
-  /* Challenge 2: 
-          1) Traverse the data.  
-          2) Create a variable to extract each criminal from data.
-          3) Using the variable created, generate HTML to display the information for each criminal
-     Note: For the pdf of the criminal poster include the following before the string interpolated url
-     into a hyperlink in order to actually display the pdf in a new tab
-     https://mozilla.github.io/pdf.js/web/viewer.html?file=${...}
-  */
-for (let i = 0; i < data.items.length; i++) {
-let criminal = data.items[i];
+console.log("script loaded");
 
-build += `
-<div>
-<h2>${criminal.title}</h2>
-<p>${criminal.description}</p>
-<a href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${criminal.files[0].url}" target="_blank">View Poster</a>
-</div>
-`;
+const output = document.getElementById("output");
+
+async function loadData() {
+  try {
+    const url = "https://raw.githubusercontent.com/rcastro2/WebDevelopment/main/data/fbi.json";
+
+    const res = await fetch(url);
+    console.log("fetch status:", res.status);
+
+    const data = await res.json();
+    console.log("data loaded:", data);
+
+    let html = "";
+
+    data.items.forEach(person => {
+      const pdf = person.files?.[0]?.url;
+
+      html += `
+        <div class="card">
+          <h2>${person.title}</h2>
+          <p>${person.description || "No description available."}</p>
+
+          ${
+            pdf
+              ? `<a class="btn" target="_blank"
+                   href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${pdf}">
+                   View Poster
+                 </a>`
+              : `<p>No poster available</p>`
+          }
+        </div>
+      `;
+    });
+
+    output.innerHTML = html;
+
+  } catch (err) {
+    console.error("ERROR LOADING DATA:", err);
+    output.innerHTML = "<h2 style='color:red'>Failed to load data</h2>";
+  }
 }
 
-output.innerHTML = build;
-}
-
-
-
-  output.innerHTML = build;
-
-
-
+loadData();
