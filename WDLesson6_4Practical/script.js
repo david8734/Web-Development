@@ -1,44 +1,43 @@
 console.log("script loaded");
 
-const output = document.getElementById("output");
-
 async function loadData() {
+  const output = document.getElementById("output");
+  if (!output) {
+    console.error("ERROR: output container not found");
+    return;
+  }
+
   try {
-    const url = "https://raw.githubusercontent.com/rcastro2/WebDevelopment/main/data/fbi.json";
+    const response = await fetch("./fbi.json");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    }
 
-    const res = await fetch(url);
-    console.log("fetch status:", res.status);
+    const data = await response.json();
+    if (!data || !Array.isArray(data.items)) {
+      throw new Error("Invalid JSON format: expected { items: [] }");
+    }
 
-    const data = await res.json();
-    console.log("data loaded:", data);
-
-    let html = "";
-
-    data.items.forEach(person => {
-      const pdf = person.files?.[0]?.url;
-
-      html += `
-        <div class="card">
-          <h2>${person.title}</h2>
-          <p>${person.description || "No description available."}</p>
-
-          ${
-            pdf
-              ? `<a class="btn" target="_blank"
-                   href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${pdf}">
-                   View Poster
-                 </a>`
+    const html = data.items
+      .map(person => {
+        const files = Array.isArray(person.files) ? person.files : [];
+        const pdfUrl = files.length > 0 ? files[0].url : "";
+        return `
+          <div class="card">
+            <h2>${person.title || "No title"}</h2>
+            <p>${person.description || "No description available."}</p>
+            ${pdfUrl
+              ? `<a class="button" target="_blank" rel="noopener noreferrer" href="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}">View Poster</a>`
               : `<p>No poster available</p>`
-          }
-        </div>
-      `;
-    });
+            }
+          </div>`;
+      })
+      .join("");
 
-    output.innerHTML = html;
-
-  } catch (err) {
-    console.error("ERROR LOADING DATA:", err);
-    output.innerHTML = "<h2 style='color:red'>Failed to load data</h2>";
+    output.innerHTML = html || "<div class='message'>No records found.</div>";
+  } catch (error) {
+    console.error("ERROR LOADING DATA:", error);
+    output.innerHTML = `<div class="message error">Failed to load data: ${error.message}</div>`;
   }
 }
 

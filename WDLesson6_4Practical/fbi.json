@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "title": "Wanted Person 1",
+      "description": "Description for wanted person 1.",
+      "files": [
+        {
+          "url": "https://example.com/poster1.pdf"
+        }
+      ]
+    },
+    {
+      "title": "Wanted Person 2",
+      "description": "Description for wanted person 2.",
+      "files": [
+        {
+          "url": "https://example.com/poster2.pdf"
+        }
+      ]
+    }
+  ]
+}
